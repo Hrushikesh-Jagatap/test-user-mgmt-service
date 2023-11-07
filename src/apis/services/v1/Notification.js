@@ -6,34 +6,21 @@ const {
 const { loadBalancer, systemToken } = require('@config');
 const saveFCMToken = async (userId, deviceId, fcmToken, appName) => {
   try {
-    const config = {
-      baseURL: loadBalancer,
-      timeout: 2000,
-    };
-    const request = new RequestHandler(config);
-    const options = {
-      headers: {
-        // app_name: appName,
-        app_version_code: 101,
-        Authorization: 'Bearer ' + systemToken,
-      },
-    };
     const payload = {
       userId,
       deviceId,
       fcmToken,
       appName,
     };
-    const response = await request.post(`/ms/apis/v1/notification/fcm-token`, payload, options);
+    const url = `${loadBalancer}/ms/apis/v1/fcm-token`;
+    const { data: result } = await RequestHandler.post({ url, data: payload });
 
-    if (response) {
-      // throw new Error('failed');
+    if (result) {
       return false;
     }
-    return response;
+    return result;
   } catch (err) {
     console.log("error inside FCM token");
-    // throw new Error('failed');
     return false;
   }
 };

@@ -108,7 +108,7 @@ const processToSendOtp = async (params) => {
 //   // }
 // };
 
-const verifyOTP = async ({ otp, phone, deviceId, fcmToken, headers, referredBy, type }) => {
+const verifyOTP = async ({ otp, phone, deviceId, fcmToken, headers, }) => {
   log.info({ info: 'OTP Controller :: Inside Verify Otp' });
 
   const { app_version_code, app_name, lat, lon } = headers;
@@ -138,7 +138,7 @@ const verifyOTP = async ({ otp, phone, deviceId, fcmToken, headers, referredBy, 
   }
 
   const isNewUser = IsNewUser(existingUser, app_version_code, app_name);
-  // const isVeg = isNewUser ? null : existingUser.householdData.isVeg;
+
   log.info({ info: `OTP Controller :: User is New User or Not ${isNewUser}` });
   // updating OTP verification status for particular App: db structure to be updated here?
   const conditions = { phone: phone, status: 'ACTIVE' };
@@ -151,9 +151,13 @@ const verifyOTP = async ({ otp, phone, deviceId, fcmToken, headers, referredBy, 
   const userDetails = {
     _id: userId,
   };
-  //call Fcm token service to save token
 
-  // await saveFCMToken(userId, deviceId, fcmToken, app_name);
+  //call Fcm token service to save token
+  const data = await saveFCMToken(userId, deviceId, fcmToken, app_name);
+
+  if (data === null) {
+    throw new Error('Error while saving FCM Token');
+  }
 
   const Token = async ({ headers, params }) => {
     const { userId } = params;
@@ -188,7 +192,7 @@ const verifyOTP = async ({ otp, phone, deviceId, fcmToken, headers, referredBy, 
       if (!existingTeacher.data) {
         const data = await createTeacher(userId);
         console.log('+++++++++++++++++++++++++++', data);
-        if(data === null || data === undefined) {
+        if (data === null || data === undefined) {
           return ('Error while Creating Teacher in db');
         }
       } else {
