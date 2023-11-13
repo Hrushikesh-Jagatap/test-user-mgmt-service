@@ -4,6 +4,12 @@ const router = express.Router();
 const { AuthManager } = require('intelli-utility');
 const UserRouter = require('./Users');
 const OtpRouter = require('./otp');
+const HomeRouter = require('./HomeRouter')
+const PrivateRouter = require('./PrivateRouter')
+
+router.use('/users', HomeRouter);
+
+router.use('/users', PrivateRouter);
 
 router.use('/users', OtpRouter);
 

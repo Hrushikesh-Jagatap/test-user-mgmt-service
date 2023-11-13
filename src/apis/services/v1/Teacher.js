@@ -24,7 +24,6 @@ const getTeacher = async (args) => {
     return null;
   } catch (error) {
     console.log(error);
-    // throw new ORDER_SERVICE_ERROR(error);
   }
 };
 
@@ -43,8 +42,6 @@ const createTeacher = async (args) => {
       },
       data: {
         userId: userid,
-        // preference: 'BIKE',
-        // uniqueId: createUUID().replace(/\D+/g, '').slice(0, 10),
       },
     };
     const result = await axios(config);
@@ -55,7 +52,6 @@ const createTeacher = async (args) => {
     return null;
   } catch (error) {
     console.log(error);
-    // throw new ORDER_SERVICE_ERROR(error);
   }
 };
 
