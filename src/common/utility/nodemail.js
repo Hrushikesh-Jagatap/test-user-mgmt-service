@@ -11,7 +11,6 @@ const sendEmailWithPDF = async (data) => {
  
     const pdfBytes = await pdfDoc.save();
 
-    // Create a Nodemailer transporter
     let transporter = nodemailer.createTransport({
         service: 'Gmail',
         auth: {
@@ -20,7 +19,6 @@ const sendEmailWithPDF = async (data) => {
         }
     });
 
-    // Email content
     let mailOptions = {
         from: 'aryan.amit0824@gmail.com',
         to: 'amit.kumar@intelliedtech.com',
