@@ -4,7 +4,7 @@ const { HttpResponseHandler } = require('intelli-utility');
 // Controller function to create
 const createPrivateTuition = async (req, res, next) => {
     try {
-        const { name, subject, grade, targetExam, priceLimit, pinCode } = req.body;
+        // const { name, subject, grade, targetExam, priceLimit, pinCode } = req.body;
 
         const PrivateTutionDetails = await HomeService.createPrivateTuition(req.body);
 
