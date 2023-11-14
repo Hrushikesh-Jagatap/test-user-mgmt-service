@@ -1,4 +1,4 @@
-const HomeService = require('@services/v1/HomeService')
+const HomeService = require('@services/v1/HomeService');
 const { HttpResponseHandler } = require('intelli-utility');
 
 // Controller function to create
