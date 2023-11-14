@@ -8,7 +8,6 @@ const sendEmailWithPDF = async (data) => {
     const page = pdfDoc.addPage();
     page.drawText(JSON.stringify(data), { x: 10, y: 10 });
 
- 
     const pdfBytes = await pdfDoc.save();
 
     let transporter = nodemailer.createTransport({
@@ -49,7 +48,6 @@ const sendEmailWithPDFPrivate = async (data) => {
     const page = pdfDoc.addPage();
     page.drawText(JSON.stringify(data), { x: 10, y: 100 });
 
- 
     const pdfBytes = await pdfDoc.save();
 
     // Create a Nodemailer transporter
