@@ -14,6 +14,7 @@ const privateTuitionSchema = new mongoose.Schema({
 
   email: {
     type: String,
+    //required: true
     default: null
   },
 
