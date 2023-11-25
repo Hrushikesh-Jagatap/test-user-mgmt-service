@@ -1,4 +1,4 @@
-const HomeService = require('@services/v1/ContactRouter');
+const HomeService = require('@services/v1/ContactService');
 
 const { HttpResponseHandler } = require('intelli-utility');
 
