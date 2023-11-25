@@ -22,7 +22,24 @@ const { createTeacher, getTeacher } = require('../../services/v1/Teacher');
 const { createStudent, getStudent } = require('../../services/v1/Student')
 
 //const { FavouriteController } = require('.');
+ const Token = async ({ headers, params }) => {
+    const { userId } = params;
+    let a = userId.toString();
+    // let { userId.toString()} = args
+    try {
+      const config = {
+        method: 'get',
+        url: `${loadBalancer}/auth/apis/v1/token/${a}`,
+        headers,
+      };
+      const data = await axios(config);
 
+      return data;
+    } catch (error) {
+      console.log(error);
+      throw new ORDER_SERVICE_ERROR(error);
+    }
+  };
 const processToSendOtp = async (params) => {
   log.info({ info: { message: 'Otp Controller :: Inside Provess To Send OTP' } });
   const { phone, headers, medium, } = params;
@@ -35,13 +52,13 @@ const processToSendOtp = async (params) => {
     });
 
     const appName = headers.app_name;
-    if (status === false) {
+    // if (status === false) {
       args = await UsersService.upsertUser({ phone, appName });
-    } else {
-      log.info({ info: 'User Has Admin Access' });
-      args = user;
-      args.userId = args._id;
-    }
+    // } else {
+    //   log.info({ info: 'User Has Admin Access' });
+    //   args = user;
+    //   args.userId = args._id;
+    // }
 
     let isNewUser = args.isNewUser;
 
@@ -50,13 +67,17 @@ const processToSendOtp = async (params) => {
       proData: {},
     };
 
-    // if (headers.app_name === 'studentApp' && args.isNewUser) {
-    //   createStudent({ userId: args.userId });
-    // }
+    if (headers.app_name === 'studentApp' && args.isNewUser) {
+      createStudent({ userId: args.userId });
+    }
 
-    // if (headers.app_name === 'teacherApp' && args.isNewUser) {
-    //   createTeacher({ userId: args.userId });
-    // }
+    if (headers.app_name === 'teacherApp' && args.isNewUser) {
+      createTeacher({ userId: args.userId });
+    }
+    if(headers.app_name === 'admin' && args.isNewUser) {
+       createTeacher({ userId: args.userId });
+    }
+    
 
     delete args.isNewUser;
 
@@ -118,7 +139,14 @@ const verifyOTP = async ({ otp, phone, deviceId, fcmToken, headers, }) => {
     headers,
     whichAdminRoleType: ADMIN.ROLE.ADMIN,
   });
-  const existingUser = status === false ? await UsersService.findOne({ phone: phone, status: 'ACTIVE' }) : user;
+  let existingUser;
+  if(status==false){
+   existingUser = status === false ? await UsersService.findOne({ phone: phone, status: 'ACTIVE' }) : user;
+}
+else{
+     existingUser = status === true ? await UsersService.findOne({ phone: phone, status: 'ACTIVE' }) : user;
+
+}
 
   if (!existingUser) {
     // log.info('function: verifyOTP. you have not sent otp but trying to verify');
@@ -153,30 +181,13 @@ const verifyOTP = async ({ otp, phone, deviceId, fcmToken, headers, }) => {
   };
 
   //call Fcm token service to save token
-  const data = await saveFCMToken(userId, deviceId, fcmToken, app_name);
+ const data = await saveFCMToken(userId, deviceId, fcmToken, app_name);
 
   if (data === null) {
     throw new Error('Error while saving FCM Token');
   }
 
-  const Token = async ({ headers, params }) => {
-    const { userId } = params;
-    let a = userId.toString();
-    // let { userId.toString()} = args
-    try {
-      const config = {
-        method: 'get',
-        url: `${loadBalancer}/auth/apis/v1/token/${a}`,
-        headers,
-      };
-      const data = await axios(config);
-
-      return data;
-    } catch (error) {
-      console.log(error);
-      throw new ORDER_SERVICE_ERROR(error);
-    }
-  };
+ 
 
   try {
     const authServiceResponse = await Token({
@@ -188,9 +199,11 @@ const verifyOTP = async ({ otp, phone, deviceId, fcmToken, headers, }) => {
     const credentials = authServiceResponse.data;
 
     if (app_name === 'teacherApp') {
+            let isadmin = false;
+ 
       const existingTeacher = await getTeacher(userId);
       if (existingTeacher.data.length == 0) {
-        const data = await createTeacher(userId);
+        const data = await createTeacher(userId,isadmin);
         console.log('+++++++++++++++++++++++++++', data);
         if (data === null || data === undefined) {
           return ('Error while Creating Teacher in db');
@@ -200,10 +213,35 @@ const verifyOTP = async ({ otp, phone, deviceId, fcmToken, headers, }) => {
       }
     }
 
+
+    if(headers.app_name === 'admin'){
+      let isadmin = true;
+       const existingTeacher = await getTeacher(userId);
+      if (existingTeacher.data.length == 0) {
+        const data = await createTeacher(userId,isadmin);
+        console.log('+++++++++++++++++++++++++++', data);
+        if (data === null || data === undefined) {
+          return ('Error while Creating Teacher in db');
+        }
+      } else {
+        console.log('Teacher with userId already exists:', existingTeacher);
+      }
+
+
+
+       const existingStudent = await getStudent(userId);
+      if (existingStudent.data.length == 0) {
+        createStudent(userId,isadmin);
+      } else {
+        console.log('Teacher with userId already exists:', existingStudent);
+      }
+    }
+
     if (headers.app_name === 'studentApp') {
+      let isadmin = false;
       const existingStudent = await getStudent(userId);
       if (existingStudent.data.length == 0) {
-        createStudent(userId);
+        createStudent(userId,isadmin);
       } else {
         console.log('Teacher with userId already exists:', existingStudent);
       }

@@ -12,6 +12,9 @@ const IsNewUser = (user, app_version_code, app_name) => {
   if (app_name === 'studentApp') {
     return !user.studentData.isOtpVerified;
   }
+  if(app_name === 'admin') {
+    return !user.adminData.isOtpVerified;
+  }
   return true;
 };
 
@@ -42,6 +45,19 @@ const AppData = async (app_version_code, app_name, user, newValues) => {
     });
   }
 
+
+
+   if (app_name === 'admin') {
+    const prevAppData = user === null || typeof user === 'undefined' ? null : user.adminData;
+
+    return Object.freeze({
+      adminData: {
+        ...prevAppData,
+        isOtpVerified,
+        lastLogin: new Date(),
+      },
+    });
+  }
 };
 
 const UpdateAppData = async (app_name, app_version_code, user, newValues) => {
@@ -53,7 +69,10 @@ const UpdateAppData = async (app_name, app_version_code, user, newValues) => {
     const newAppData = 'studentData' in newValues ? newValues.studentData : user.studentData;
     Object.assign(user.studentData, newAppData);
   }
-
+// if (app_name === 'admin') {
+//     const newAppData = 'adminData' in newValues ? newValues.adminData : user.adminData;
+//     Object.assign(user.adminData, newAppData);
+//   }
   return Object.freeze(user);
 };
 
