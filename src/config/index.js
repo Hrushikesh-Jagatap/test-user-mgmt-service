@@ -25,10 +25,12 @@ const MEDIA_S3 = AccessEnv('MEDIA_S3');
 const BIZ_BASE_URL = AccessEnv('BIZ_BASE_URL');
 
 const LOAD_BALANCER = AccessEnv('LOAD_BALANCER');
+const ms = AccessEnv('ms');
 
 // const student = AccessEnv('student');
 // const teacher = AccessEnv('teacher')
 // const auth = AccessEnv('auth');
+
 const SYSTEM_TOKEN = AccessEnv('SYSTEM_TOKEN');
 
 const QUEUE_URL = AccessEnv('QUEUE_URL');
@@ -50,6 +52,7 @@ module.exports = {
     // auth:auth,
     // student:student,
     // teacher:teacher,
+    ms:ms,
   },
 
   mongodb: {
@@ -74,6 +77,7 @@ module.exports = {
   // student: student,
   // teacher:teacher,
   // auth:auth,
+  ms:ms,
   sessionName: SESSION_NAME,
   media_s3: MEDIA_S3,
   bizBaseUrl: BIZ_BASE_URL,

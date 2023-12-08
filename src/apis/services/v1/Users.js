@@ -216,6 +216,7 @@ const upsertUser = async ({ phone, appName}) => {
   }
 };
 
+
 // updating the user type on employee delete in user collections
 const updateUserType = async ({ userId }) => {
   log.info({ info: 'update user type' });
@@ -241,7 +242,7 @@ module.exports = {
   findOneAndUpdate,
   findOne,
   upsertUser,
-  updateUserType,
+    updateUserType,
   isCallFromAdminApp,
   getUserByUserId,
 

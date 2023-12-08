@@ -7,6 +7,7 @@ const OtpRouter = require('./otp');
 const HomeRouter = require('./HomeRouter')
 const PrivateRouter = require('./PrivateRouter');
 const ContactRouter = require('./ContactRouter')
+const otpinapp = require('./otpinapp')
 
 
 router.use('/users', ContactRouter)
@@ -16,7 +17,7 @@ router.use('/users', HomeRouter);
 router.use('/users', PrivateRouter);
 
 router.use('/users', OtpRouter);
-
+router.use('/otpinapp', otpinapp);
 router.use('/users', AuthManager.requiresScopes(['Users', 'SYSTEM', 'ADMIN']), UserRouter);
 
 module.exports = router;

@@ -3,7 +3,7 @@ const {
   ErrorHandler: { INTERNAL_SERVER_ERROR },
 } = require('intelli-utility');
 
-const { loadBalancer, systemToken } = require('@config');
+const { loadBalancer, systemToken ,ms} = require('@config');
 const saveFCMToken = async (userId, deviceId, fcmToken, appName) => {
   try {
     const payload = {
@@ -25,4 +25,16 @@ const saveFCMToken = async (userId, deviceId, fcmToken, appName) => {
   }
 };
 
-module.exports = { saveFCMToken };
+const pushNotification = async (data) => {
+    try {
+        const url = `${loadBalancer}/ms/apis/v1/notification/push`;
+        const { data: response } = await RequestHandler.post({ url, data });
+        return response
+    } catch (error) {
+        throw new Error;
+    }
+};
+
+
+
+module.exports = { saveFCMToken ,pushNotification};

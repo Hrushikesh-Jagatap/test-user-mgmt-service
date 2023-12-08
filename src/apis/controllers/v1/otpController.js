@@ -258,19 +258,19 @@ else{
   }
 };
 
-const checkIfRegistered = async ({ phone, app_version_code, appName }) => {
-  const conditions = { phone };
-  const user = await UsersService.findOne(conditions);
-  const isNumberRegistered =
-    !(user === null || typeof user === 'undefined') && !IsNewUser(user, app_version_code, appName);
+// const checkIfRegistered = async ({ phone, app_version_code, appName }) => {
+//   const conditions = { phone };
+//   const user = await UsersService.findOne(conditions);
+//   const isNumberRegistered =
+//     !(user === null || typeof user === 'undefined') && !IsNewUser(user, app_version_code, appName);
 
-  // no registered user found for phoneNumber
-  // const isNumberRegistered = ;
-  return Object.freeze({ isNumberRegistered });
-};
+//   // no registered user found for phoneNumber
+//   // const isNumberRegistered = ;
+//   return Object.freeze({ isNumberRegistered });
+// };
 
 module.exports = {
   processToSendOtp,
   verifyOTP,
-  checkIfRegistered,
+  // checkIfRegistered,
 };
