@@ -20,7 +20,7 @@
     "type": "git",
     "url": ""
   },
-  "author": "Sushant Gautam",
+  "author": "Hrushikesh Jagatap",
   "license": "ISC",
   "private": true,
   "dependencies": {
@@ -33,6 +33,7 @@
     "cors": "^2.8.5",
     "cuid": "^3.0.0",
     "dotenv": "^16.0.1",
+    "firebase-admin": "^11.3.0",
     "express": "^4.18.1",
     "intelli-utility": "git+https://vksingh1024:ATBBUXhgcwCmM6fWY9TUqjnqjfzb28AE3506@bitbucket.org/intelliedtech/intelli-utility.git",
     "ip": "^2.0.0",

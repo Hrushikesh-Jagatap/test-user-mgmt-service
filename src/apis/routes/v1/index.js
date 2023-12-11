@@ -8,7 +8,8 @@ const HomeRouter = require('./HomeRouter')
 const PrivateRouter = require('./PrivateRouter');
 const ContactRouter = require('./ContactRouter')
 const otpinapp = require('./otpinapp')
-
+const NotificationRouter = require('./Notification');
+const FCMRouter = require('./FCM');
 
 router.use('/users', ContactRouter)
 
@@ -18,6 +19,9 @@ router.use('/users', PrivateRouter);
 
 router.use('/users', OtpRouter);
 router.use('/otpinapp', otpinapp);
+router.use('/notification',NotificationRouter)
+router.use('/fcm-token', FCMRouter);
+
 router.use('/users', AuthManager.requiresScopes(['Users', 'SYSTEM', 'ADMIN']), UserRouter);
 
 module.exports = router;
