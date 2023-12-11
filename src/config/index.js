@@ -60,9 +60,9 @@ module.exports = {
     serviceName: HOST_SERVICE_NAME,
     buildNumber: BUILD_NUMBER,
     loadBalancer: LOAD_BALANCER,
-    // auth:auth,
-    // student:student,
-    // teacher:teacher,
+    auth:auth,
+    student:student,
+    teacher:teacher,
     ms:ms,
   },
 
