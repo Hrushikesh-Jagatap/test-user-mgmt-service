@@ -12,8 +12,8 @@ const sendotps = require('@root/src/apis/services/otp');
 
 const processToSendOtp = async ({args}) => {
   log.info({info: 'OTP Service :: Inside Process To Send Otp'})
-   const { userId } = args;
-   const a=await sendotps.sendOtp(userId);
+   const { phone } = args;
+   const a=await sendotps.sendOtp(phone);
 console.log(a);
 
 if(a=="OTP sent successfully!")
@@ -44,7 +44,7 @@ else{
 };
 
 const verifyOTP = async ({ phone, otp, userId }) => {
-  const abc= await sendotps.verifyOtp(userId,otp);
+  const abc= await sendotps.verifyOtp(phone,otp);
 console.log("===========",abc);
 if(abc == 'OTP verification successful!')
 {
