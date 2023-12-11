@@ -8,7 +8,7 @@ const {
 const { sendOtpMessage } = require('@root/src/apis/producers/otpProducer');
 const { EVENT_TYPES } = require('@constants');
 const { MEDIUM, ENV } = require('@common/utility/constants');
-const sendotps = require('@root/src/apis/services/otp');
+const sendotps = require('@root/src/apis/services/v1/otp');
 
 const processToSendOtp = async ({args}) => {
   log.info({info: 'OTP Service :: Inside Process To Send Otp'})

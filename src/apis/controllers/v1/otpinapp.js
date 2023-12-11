@@ -1,4 +1,5 @@
-const { UsersService, OtpService, ReferService, FavouriteService, RetailerService } = require('@services/v1');
+const { UsersService,  ReferService, FavouriteService, RetailerService } = require('@services/v1');
+const OtpService = require('@root/src/apis/services/v1/otpServices');
 const { env } = require('@config');
 const { ENV, ADMIN } = require('@common/utility/constants');
 const {
