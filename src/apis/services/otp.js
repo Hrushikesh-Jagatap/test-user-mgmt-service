@@ -11,6 +11,7 @@ const sendOtp = async (phone) => {
   try {
     const mobileNumber = phone;
     const otp = Math.floor(1000 + Math.random() * 9000);
+      console.log("otp===",otp);
     const messages = `Your OTP is from IntelliedTech ${otp}  Do not share with anyone`;
 
     // Store the generated OTP and its expiration time
