@@ -51,7 +51,7 @@ if(abc == 'OTP verification successful!')
   return true
 }
 else{
-  return false;
+   throw new VERIFY_OTP_ERROR('unable to verify');
 }
 
 }
