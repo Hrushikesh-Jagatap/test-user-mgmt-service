@@ -23,8 +23,10 @@ router.post('/send_otp/sms', async (req, res, next) => {
   log.info({ info: 'Inside Send Otp Over SMS Router' });
   try {
 
-      const {authorization } = req.headers;
-  const headers = {authorization };
+     
+      const {authorization, app_name} = req.headers;
+      
+  const headers = {authorization,app_name };
        const { userid } = req.body;
 const args = { userid, headers };
     // const { app_version_code, app_name, authorization } = req.headers;
