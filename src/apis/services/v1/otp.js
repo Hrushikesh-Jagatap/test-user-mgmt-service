@@ -6,7 +6,7 @@ app.use(express.json());
 
 var otpStores = {};
 
-const sendOtp = async (userid) => {
+const sendOtp = async (userid,app_name) => {
   try {
     // const mobileNumber = phone;
     const userId =userid
@@ -20,7 +20,7 @@ const sendOtp = async (userid) => {
    
     let NotificationData = {
       userId: userid,
-      appName: 'teacherApp',
+    appName: app_name,
       data: {
         message: messages
       },
