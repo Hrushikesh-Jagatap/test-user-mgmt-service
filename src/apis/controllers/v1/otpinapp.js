@@ -46,10 +46,12 @@ const processToSendOtp = async (params) => {
   log.info({ info: { message: 'Otp Controller :: Inside Provess To Send OTP' } });
   // const { phone, headers, medium, } = params;
   const {userid}= params;
+   const app_name=params.headers.app_name;
   try {
     let args = {};
   args.userId = userid;
- 
+   args.app_name = app_name;
+
     // if (status === false) {
       // args = await UsersService.upsertUsers(userid);
     // } else {
